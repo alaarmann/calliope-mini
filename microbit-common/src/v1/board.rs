@@ -1,7 +1,4 @@
-use super::gpio::{
-    DisplayPins, BTN_A, BTN_B, EDGE00, EDGE01, EDGE02, EDGE08, EDGE12, EDGE16, SCL, SDA, UART_RX,
-    UART_TX,
-};
+use super::gpio::{DisplayPins, BTN_A, BTN_B, EDGE00, EDGE02, SCL, SDA, UART_RX, UART_TX};
 use crate::{
     hal::{
         gpio::{p0, Disconnected, Level},
@@ -137,23 +134,24 @@ impl Board {
                 //p0_02: p0parts.p0_02,
                 //p0_03: p0parts.p0_03,
                 //p0_16: p0parts.p0_16,
-                //p0_18: p0parts.p0_18,
-                p0_19: p0parts.p0_19,
+                p0_18: p0parts.p0_18,
+                //p0_19: p0parts.p0_19,
                 //p0_20: p0parts.p0_20,
                 p0_21: p0parts.p0_21,
-                p0_22: p0parts.p0_22,
+                //p0_22: p0parts.p0_22,
                 p0_23: p0parts.p0_23,
                 p0_27: p0parts.p0_27,
                 p0_28: p0parts.p0_28,
                 p0_29: p0parts.p0_29,
+                p0_30: p0parts.p0_30,
             },
             edge: Edge {
-                e00: p0parts.p0_03,
-                e01: p0parts.p0_02,
+                e00: p0parts.p0_00,
+                //e01: p0parts.p0_00,
                 e02: p0parts.p0_01,
-                e08: p0parts.p0_18,
-                e12: p0parts.p0_20,
-                e16: p0parts.p0_16,
+                //e08: p0parts.p0_18,
+                //e12: p0parts.p0_20,
+                //e16: p0parts.p0_16,
             },
             display_pins: DisplayPins {
                 row1: p0parts.p0_13.into_push_pull_output(Level::Low),
@@ -171,11 +169,11 @@ impl Board {
             },
             buttons: Buttons {
                 button_a: p0parts.p0_17.into_floating_input(),
-                button_b: p0parts.p0_26.into_floating_input(),
+                button_b: p0parts.p0_16.into_floating_input(),
             },
             i2c: I2CPins {
-                scl: p0parts.p0_00.into_floating_input(),
-                sda: p0parts.p0_30.into_floating_input(),
+                scl: p0parts.p0_19.into_floating_input(),
+                sda: p0parts.p0_20.into_floating_input(),
             },
             uart: UartPins {
                 tx: p0parts.p0_24.into_push_pull_output(Level::Low),
@@ -235,11 +233,11 @@ pub struct Pins {
     // pub p0_15: p0::P0_15<Disconnected>, // LEDs
     // pub p0_16: p0::P0_16<Disconnected>, // EDGE16
     // pub p0_17: p0::P0_17<Disconnected>, // BTN_A
-    // pub p0_18: p0::P0_18<Disconnected>, // EDGE08
-    pub p0_19: p0::P0_19<Disconnected>,
+    pub p0_18: p0::P0_18<Disconnected>, // EDGE08
+    // pub p0_19: p0::P0_19<Disconnected>,
     // pub p0_20: p0::P0_20<Disconnected>, // EDGE12
     pub p0_21: p0::P0_21<Disconnected>,
-    pub p0_22: p0::P0_22<Disconnected>,
+    // pub p0_22: p0::P0_22<Disconnected>,
     pub p0_23: p0::P0_23<Disconnected>,
     // pub p0_24: p0::P0_24<Disconnected>, // UART TX
     // pub p0_25: p0::P0_25<Disconnected>, // UART RX
@@ -247,7 +245,7 @@ pub struct Pins {
     pub p0_27: p0::P0_27<Disconnected>,
     pub p0_28: p0::P0_28<Disconnected>,
     pub p0_29: p0::P0_29<Disconnected>,
-    // pub p0_30: p0::P0_30<Disconnected>, // SDA
+    pub p0_30: p0::P0_30<Disconnected>, // SDA
 }
 
 /// Unused edge connector pins
@@ -259,25 +257,25 @@ pub struct Edge {
     // pub e05: BTN_A,
     // pub e06: COL9,
     // pub e07: COL8,
-    pub e01: EDGE01<Disconnected>, // <- big pad 2
-    pub e08: EDGE08<Disconnected>,
+    //pub e01: EDGE01<Disconnected>, // <- big pad 2
+    //pub e08: EDGE08<Disconnected>,
     // pub e09: COL7,
     // pub e10: COL3,
     // pub e11: BTN_B,
-    pub e12: EDGE12<Disconnected>,
+    //pub e12: EDGE12<Disconnected>,
     pub e02: EDGE02<Disconnected>, // <- big pad 3
-    //pub e13<MODE>: SCK<MODE>,
-    //pub e14<MODE>: MISO<MODE>,
-    //pub e15<MODE>: MOSI<MODE>,
-    pub e16: EDGE16<Disconnected>,
-    // +V
-    // +V
-    // +V
-    // pub e19: SCL,
-    // pub e20: SDA,
-    // GND
-    // GND
-    // GND
+                                   //pub e13<MODE>: SCK<MODE>,
+                                   //pub e14<MODE>: MISO<MODE>,
+                                   //pub e15<MODE>: MOSI<MODE>,
+                                   //pub e16: EDGE16<Disconnected>,
+                                   // +V
+                                   // +V
+                                   // +V
+                                   // pub e19: SCL,
+                                   // pub e20: SDA,
+                                   // GND
+                                   // GND
+                                   // GND
 }
 
 /// Board buttons

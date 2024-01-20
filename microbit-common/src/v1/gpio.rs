@@ -8,9 +8,10 @@
 use crate::hal::gpio::{p0, Floating, Input, Output, Pin, PushPull};
 
 /* GPIO pads */
-pub type PAD0<MODE> = p0::P0_03<MODE>;
-pub type PAD1<MODE> = p0::P0_02<MODE>;
+pub type PAD1<MODE> = p0::P0_00<MODE>;
 pub type PAD2<MODE> = p0::P0_01<MODE>;
+pub type PAD3<MODE> = p0::P0_02<MODE>;
+pub type PAD4<MODE> = p0::P0_22<MODE>;
 
 /* LED display */
 pub const NUM_COLS: usize = 9;
@@ -120,16 +121,16 @@ macro_rules! display_pins {
 
 /* buttons */
 pub type BTN_A = p0::P0_17<Input<Floating>>;
-pub type BTN_B = p0::P0_26<Input<Floating>>;
+pub type BTN_B = p0::P0_16<Input<Floating>>;
 
 /* spi */
-pub type MOSI<MODE> = p0::P0_21<MODE>;
-pub type MISO<MODE> = p0::P0_22<MODE>;
-pub type SCK<MODE> = p0::P0_23<MODE>;
+pub type MOSI<MODE> = p0::P0_09<MODE>;
+pub type MISO<MODE> = p0::P0_08<MODE>;
+pub type SCK<MODE> = p0::P0_07<MODE>;
 
 /* i2c - shared external and internal */
-pub type SCL = p0::P0_00<Input<Floating>>;
-pub type SDA = p0::P0_30<Input<Floating>>;
+pub type SCL = p0::P0_19<Input<Floating>>;
+pub type SDA = p0::P0_20<Input<Floating>>;
 
 /* uart */
 pub type UART_TX = p0::P0_24<Output<PushPull>>;
@@ -137,7 +138,7 @@ pub type UART_RX = p0::P0_25<Input<Floating>>;
 
 /* edge connector */
 pub type EDGE03 = COL1;
-pub type EDGE00<MODE> = PAD0<MODE>; // <- big pad 1
+pub type EDGE00<MODE> = PAD1<MODE>; // <- big pad 1
 pub type EDGE04 = COL2;
 pub type EDGE05 = BTN_A;
 pub type EDGE06 = COL9;
