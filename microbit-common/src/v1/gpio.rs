@@ -8,10 +8,10 @@
 use crate::hal::gpio::{p0, Floating, Input, Output, Pin, PushPull};
 
 /* GPIO pads */
-pub type PAD1<MODE> = p0::P0_00<MODE>;
-pub type PAD2<MODE> = p0::P0_01<MODE>;
-pub type PAD3<MODE> = p0::P0_02<MODE>;
-pub type PAD4<MODE> = p0::P0_22<MODE>;
+pub type PAD0<MODE> = p0::P0_00<MODE>;
+pub type PAD1<MODE> = p0::P0_01<MODE>;
+pub type PAD2<MODE> = p0::P0_02<MODE>;
+pub type PAD3<MODE> = p0::P0_22<MODE>;
 
 /* LED display */
 pub const NUM_COLS: usize = 9;
@@ -123,6 +123,17 @@ macro_rules! display_pins {
 pub type BTN_A = p0::P0_17<Input<Floating>>;
 pub type BTN_B = p0::P0_16<Input<Floating>>;
 
+/* rgb led */
+pub type RGB_LED<MODE> = p0::P0_18<MODE>;
+
+/* motor */
+pub type MOTOR_NSLEEP<MODE> = p0::P0_28<MODE>;
+pub type MOTOR_IN1<MODE> = p0::P0_29<MODE>;
+pub type MOTOR_IN2<MODE> = p0::P0_30<MODE>;
+
+/* mic */
+pub type MIC<MODE> = p0::P0_03<MODE>;
+
 /* spi */
 pub type MOSI<MODE> = p0::P0_09<MODE>;
 pub type MISO<MODE> = p0::P0_08<MODE>;
@@ -136,29 +147,33 @@ pub type SDA = p0::P0_20<Input<Floating>>;
 pub type UART_TX = p0::P0_24<Output<PushPull>>;
 pub type UART_RX = p0::P0_25<Input<Floating>>;
 
+/* accelerometer interrupt pin */
+pub type ACCEL_INT<MODE> = p0::P0_21<MODE>;
+
 /* edge connector */
-pub type EDGE03 = COL1;
-pub type EDGE00<MODE> = PAD1<MODE>; // <- big pad 1
-pub type EDGE04 = COL2;
-pub type EDGE05 = BTN_A;
-pub type EDGE06 = COL9;
-pub type EDGE07 = COL8;
-pub type EDGE01<MODE> = PAD1<MODE>; // <- big pad 2
-pub type EDGE08<MODE> = p0::P0_18<MODE>;
-pub type EDGE09 = COL7;
-pub type EDGE10 = COL3;
-pub type EDGE11 = BTN_B;
-pub type EDGE12<MODE> = p0::P0_20<MODE>;
-pub type EDGE02<MODE> = PAD2<MODE>; // <- big pad 3
-pub type EDGE13<MODE> = SCK<MODE>;
-pub type EDGE14<MODE> = MISO<MODE>;
-pub type EDGE15<MODE> = MOSI<MODE>;
-pub type EDGE16<MODE> = p0::P0_16<MODE>;
-// EDGE18 -> +V
-// EDGE19 -> +V
-// EDGE20 -> +V
+// -> GND
+// -> +V
+pub type EDGE00<MODE> = PAD0<MODE>;
+pub type EDGE01<MODE> = PAD1<MODE>;
+pub type EDGE02<MODE> = PAD2<MODE>;
+pub type EDGE03<MODE> = PAD3<MODE>;
+pub type EDGE04 = COL1;
+pub type EDGE05 = COL2;
+pub type EDGE06 = COL3;
+pub type EDGE07 = COL4;
+pub type EDGE08 = COL5;
+pub type EDGE09 = COL6;
+// -> GND
+// -> GND
+pub type EDGE10 = COL7;
+pub type EDGE11 = COL8;
+pub type EDGE12 = COL9;
+pub type EDGE13 = ROW1;
+pub type EDGE14 = ROW2;
+pub type EDGE15 = ROW3;
+pub type EDGE16<MODE> = p0::P0_26<MODE>;
+pub type EDGE17<MODE> = p0::P0_27<MODE>;
+pub type EDGE18 = SDA;
 pub type EDGE19 = SCL;
-pub type EDGE20 = SDA;
-// EDGE23 -> GND
-// EDGE24 -> GND
-// EDGE25 -> GND
+// -> +V
+// -> GND
