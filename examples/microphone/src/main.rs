@@ -6,15 +6,10 @@ use panic_halt as _;
 
 use cortex_m_rt::entry;
 
-use microbit::{
+use calliope_mini::{
     board::Board,
     display::blocking::Display,
-    hal::{
-        gpio::{Level, OpenDrainConfig},
-        prelude::*,
-        saadc::SaadcConfig,
-        Saadc, Timer,
-    },
+    hal::{adc::AdcConfig, prelude::*, Adc, Timer},
 };
 
 #[entry]
@@ -24,21 +19,15 @@ fn main() -> ! {
         let mut display = Display::new(board.display_pins);
 
         // initialize adc
-        let saadc_config = SaadcConfig::default();
-        let mut saadc = Saadc::new(board.ADC, saadc_config);
+        let adc_config = AdcConfig::default();
+        let mut adc = Adc::new(board.ADC, adc_config);
         let mut mic_in = board.microphone_pins.mic_in.into_floating_input();
-
-        // enable microphone
-        board
-            .microphone_pins
-            .mic_run
-            .into_open_drain_output(OpenDrainConfig::Disconnect0HighDrive1, Level::High);
 
         let mut count: u64 = 0;
         let mut sum: u64 = 0;
         let mut max_value: u16 = 0;
         loop {
-            let mic_value = saadc
+            let mic_value = adc
                 .read(&mut mic_in)
                 .expect("could not read value of microphone") as u16;
 

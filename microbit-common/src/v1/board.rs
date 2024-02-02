@@ -3,6 +3,7 @@ use super::gpio::{
     UART_TX,
 };
 use crate::{
+    gpio::MicrophonePins,
     hal::{
         gpio::{p0, Disconnected, Level},
         twi, uart,
@@ -24,6 +25,9 @@ pub struct Board {
 
     /// buttons
     pub buttons: Buttons,
+
+    /// microphone pins
+    pub microphone_pins: MicrophonePins,
 
     /// I2C shared internal and external bus pins
     pub i2c: I2CPins,
@@ -160,6 +164,9 @@ impl Board {
             buttons: Buttons {
                 button_a: p0parts.p0_17.into_floating_input(),
                 button_b: p0parts.p0_16.into_floating_input(),
+            },
+            microphone_pins: MicrophonePins {
+                mic_in: p0parts.p0_03.into_floating_input(),
             },
             i2c: I2CPins {
                 scl: p0parts.p0_19.into_floating_input(),

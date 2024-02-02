@@ -53,6 +53,11 @@ pub struct DisplayPins {
     pub row3: ROW3,
 }
 
+/// GPIO pins connected to the microphone
+pub struct MicrophonePins {
+    pub mic_in: MIC,
+}
+
 type LED = Pin<Output<PushPull>>;
 
 impl DisplayPins {
@@ -132,7 +137,7 @@ pub type MOTOR_IN1<MODE> = p0::P0_29<MODE>;
 pub type MOTOR_IN2<MODE> = p0::P0_30<MODE>;
 
 /* mic */
-pub type MIC<MODE> = p0::P0_03<MODE>;
+pub type MIC = p0::P0_03<Input<Floating>>;
 
 /* spi */
 pub type MOSI<MODE> = p0::P0_09<MODE>;
