@@ -3,25 +3,6 @@ use std::{collections::HashMap, env, fs, path, process::Command};
 
 pub static DEPENDENCIES: &[&str] = &["flip-link"];
 
-fn install_targets() {
-    let targets = CRATES
-        .iter()
-        .map(|(_, target, _)| *target)
-        .collect::<Vec<_>>();
-
-    let mut rustup = Command::new("rustup");
-    rustup.args(&["target", "add"]).args(&targets);
-    let status = rustup
-        .status()
-        .map_err(|e| format!("couldn't execute {:?}: {}", rustup, e))
-        .unwrap();
-    assert!(
-        status.success(),
-        "failed to install targets with rustup: {:?}",
-        rustup
-    );
-}
-
 /// Install global dependencies
 fn install_dependencies() {
     for dependency in DEPENDENCIES {
@@ -186,7 +167,6 @@ pub fn ci() {
         env::set_current_dir("..").unwrap();
     }
 
-    wrap_in_group(is_ci, "install targets", &install_targets);
     wrap_in_group(is_ci, "install dependencies", &install_dependencies);
     wrap_in_group(is_ci, "build crates", &build_crates);
     wrap_in_group(is_ci, "build examples", &build_examples);

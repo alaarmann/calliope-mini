@@ -8,7 +8,7 @@ let
       "rust-src" # for rust-analyzer
       "llvm-tools-preview"
     ];
-    targets = [ "thumbv6m-none-eabi" ];
+    targets = [ "thumbv6m-none-eabi" "thumbv7em-none-eabihf" ];
   };
 in pkgs.mkShell {
   buildInputs = [ rust ] ++ (with pkgs; [
