@@ -9,7 +9,7 @@ use core::{cell::RefCell, ops::DerefMut};
 use cortex_m::interrupt::Mutex;
 use cortex_m_rt::entry;
 
-use microbit::{
+use calliope_mini::{
     hal::{clocks, rng, rtc},
     pac::{self, interrupt},
 };
@@ -23,7 +23,7 @@ static RNG: Mutex<RefCell<Option<Pcg32>>> = Mutex::new(RefCell::new(None));
 #[entry]
 fn main() -> ! {
     let mut cp = pac::CorePeripherals::take().unwrap();
-    let p = microbit::Peripherals::take().unwrap();
+    let p = calliope_mini::Peripherals::take().unwrap();
 
     cortex_m::interrupt::free(move |cs| {
         /* Start low frequency clock */

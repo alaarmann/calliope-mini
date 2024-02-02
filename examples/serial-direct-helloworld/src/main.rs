@@ -7,7 +7,7 @@ use cortex_m_rt::entry;
 
 #[entry]
 fn main() -> ! {
-    if let Some(p) = microbit::Peripherals::take() {
+    if let Some(p) = calliope_mini::Peripherals::take() {
         p.GPIO.pin_cnf[24].write(|w| w.pull().pullup().dir().output());
         p.GPIO.pin_cnf[25].write(|w| w.pull().disabled().dir().input());
 
@@ -25,7 +25,7 @@ fn main() -> ! {
     }
 }
 
-fn write_uart0(uart0: &microbit::pac::UART0, s: &str) -> core::fmt::Result {
+fn write_uart0(uart0: &calliope_mini::pac::UART0, s: &str) -> core::fmt::Result {
     uart0.tasks_starttx.write(|w| unsafe { w.bits(1) });
     for c in s.as_bytes() {
         /* Write the current character to the output register */

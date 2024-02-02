@@ -9,7 +9,7 @@ use cortex_m_rt::entry;
 use microbit::hal::{prelude::*, Timer};
 
 #[cfg(feature = "v1")]
-use microbit::{
+use calliope_mini::{
     hal::twi,
     pac::{twi0::frequency::FREQUENCY_A, TWI0},
 };

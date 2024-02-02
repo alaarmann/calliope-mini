@@ -6,7 +6,7 @@ use panic_halt as _;
 use core::fmt::Write;
 
 #[cfg(feature = "v1")]
-use microbit::{
+use calliope_mini::{
     hal::prelude::*,
     hal::uart,
     hal::uart::{Baudrate, Parity},

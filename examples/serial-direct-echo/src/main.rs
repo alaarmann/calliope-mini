@@ -8,7 +8,7 @@ use cortex_m_rt::entry;
 
 #[entry]
 fn main() -> ! {
-    if let Some(p) = microbit::Peripherals::take() {
+    if let Some(p) = calliope_mini::Peripherals::take() {
         /* Configure RX and TX pins accordingly */
         p.GPIO.pin_cnf[24].write(|w| w.pull().pullup().dir().output());
         p.GPIO.pin_cnf[25].write(|w| w.pull().disabled().dir().input());

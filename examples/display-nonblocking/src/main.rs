@@ -9,7 +9,7 @@ use cortex_m::interrupt::Mutex;
 use cortex_m::peripheral::Peripherals;
 use cortex_m_rt::entry;
 
-use microbit::{
+use calliope_mini::{
     board::Board,
     display::nonblocking::{Display, GreyscaleImage},
     hal::{

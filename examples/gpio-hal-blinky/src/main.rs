@@ -3,9 +3,9 @@
 
 use panic_halt as _;
 
+use calliope_mini::{board::Board, hal::timer::Timer};
 use cortex_m_rt::entry;
 use embedded_hal::{blocking::delay::DelayMs, digital::v2::OutputPin};
-use microbit::{board::Board, hal::timer::Timer};
 
 #[entry]
 fn main() -> ! {

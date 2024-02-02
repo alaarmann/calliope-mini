@@ -8,7 +8,7 @@ use cortex_m_rt::entry;
 #[cfg(feature = "v1")]
 #[entry]
 fn main() -> ! {
-    if let Some(p) = microbit::Peripherals::take() {
+    if let Some(p) = calliope_mini::Peripherals::take() {
         p.GPIO.pin_cnf[4].write(|w| w.dir().output());
         p.GPIO.pin_cnf[13].write(|w| w.dir().output());
 

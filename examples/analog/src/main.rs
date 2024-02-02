@@ -6,7 +6,7 @@ use panic_halt as _;
 
 use cortex_m_rt::entry;
 
-use microbit::{
+use calliope_mini::{
     adc::{Adc, AdcConfig, Default},
     board::Board,
     display::blocking::Display,
@@ -19,7 +19,7 @@ fn main() -> ! {
         let mut timer = Timer::new(board.TIMER0);
         let mut display = Display::new(board.display_pins);
         let mut adc = Adc::new(board.ADC, AdcConfig::default_10bit());
-        let mut anapin = board.edge.e00.into_floating_input(); // PAD0
+        let mut anapin = board.edge.e01.into_floating_input(); // PAD1
 
         let numbers = [
             [

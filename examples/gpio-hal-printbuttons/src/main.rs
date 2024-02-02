@@ -6,13 +6,13 @@ use panic_halt as _;
 
 use core::cell::RefCell;
 
-use cortex_m::interrupt::Mutex;
-use cortex_m_rt::entry;
-use microbit::{
+use calliope_mini::{
     board::Board,
     hal::gpiote::Gpiote,
     pac::{self, interrupt},
 };
+use cortex_m::interrupt::Mutex;
+use cortex_m_rt::entry;
 
 static GPIO: Mutex<RefCell<Option<Gpiote>>> = Mutex::new(RefCell::new(None));
 

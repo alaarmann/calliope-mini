@@ -6,7 +6,7 @@ use panic_halt as _;
 
 use core::cell::RefCell;
 
-use microbit::pac::{self, interrupt};
+use calliope_mini::pac::{self, interrupt};
 
 use cortex_m::interrupt::Mutex;
 use cortex_m_rt::entry;
@@ -16,7 +16,7 @@ static RTC: Mutex<RefCell<Option<pac::RTC0>>> = Mutex::new(RefCell::new(None));
 
 #[entry]
 fn main() -> ! {
-    if let Some(p) = microbit::Peripherals::take() {
+    if let Some(p) = calliope_mini::Peripherals::take() {
         p.CLOCK.tasks_lfclkstart.write(|w| unsafe { w.bits(1) });
 
         while p.CLOCK.events_lfclkstarted.read().bits() == 0 {}

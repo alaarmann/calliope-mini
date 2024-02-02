@@ -6,3 +6,4 @@ members = [
   "examples/*",
   "xtask",
 ]
+resolver = "2"

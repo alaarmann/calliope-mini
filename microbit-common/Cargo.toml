@@ -2,7 +2,7 @@
 name = "microbit-common"
 version = "0.13.0"
 description = "Implementation details for the BBC Micro:bit board support crates"
-edition = "2018"
+edition = "2021"
 readme = "../README.md"
 
 repository = "https://github.com/nrf-rs/microbit"

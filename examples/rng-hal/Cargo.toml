@@ -1,7 +1,7 @@
 [package]
 name = "rng-hal-printrandserial"
 version = "0.1.0"
-edition = "2018"
+edition = "2021"
 
 [dependencies]
 cortex-m = { version = "0.7", features = ["critical-section-single-core"]}
@@ -18,7 +18,7 @@ version = "0.8.3"
 default-features = false
 version = "0.3.0"
 
-[dependencies.microbit]
+[dependencies.calliope-mini]
 path = "../../microbit"
 optional = true
 
@@ -27,7 +27,7 @@ path = "../../microbit-v2"
 optional = true
 
 [features]
-v1 = ["microbit"]
+v1 = ["calliope-mini"]
 v2 = ["microbit-v2"]
 
 default = [

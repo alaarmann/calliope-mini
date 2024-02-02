@@ -6,7 +6,7 @@ use panic_halt as _;
 
 use cortex_m_rt::entry;
 
-use microbit::{
+use calliope_mini::{
     board::Board,
     display::blocking::Display,
     hal::{prelude::*, Timer},

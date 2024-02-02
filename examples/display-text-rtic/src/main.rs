@@ -12,7 +12,7 @@ use rtic::app;
 #[app(device = microbit::pac, peripherals = true)]
 mod app {
 
-    use microbit::{
+    use calliope_mini::{
         board::Board,
         display::nonblocking::{Display, Frame, MicrobitFrame},
         hal::{

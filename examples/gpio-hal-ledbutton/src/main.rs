@@ -4,8 +4,8 @@
 use defmt_rtt as _;
 use panic_halt as _;
 
+use calliope_mini::{board::Board, hal::prelude::*};
 use cortex_m_rt::entry;
-use microbit::{board::Board, hal::prelude::*};
 
 #[entry]
 fn main() -> ! {
