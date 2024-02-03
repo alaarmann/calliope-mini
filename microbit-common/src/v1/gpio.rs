@@ -53,8 +53,8 @@ pub struct DisplayPins {
     pub row3: ROW3,
 }
 
-/// GPIO pins connected to the speaker / motor driver
-pub struct SpeakerMotorPins {
+/// GPIO pins connected to the beeper / motor driver
+pub struct BeeperMotorPins {
     pub motor_nsleep: MOTOR_NSLEEP,
     pub motor_in1: MOTOR_IN1,
     pub motor_in2: MOTOR_IN2,

@@ -1,5 +1,5 @@
 [package]
-name = "speaker"
+name = "beeper"
 version = "0.1.0"
 edition = "2021"
 

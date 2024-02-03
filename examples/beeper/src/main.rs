@@ -4,28 +4,31 @@
 use defmt_rtt as _;
 use panic_halt as _;
 
-use core::cell::RefCell;
-use cortex_m::interrupt::Mutex;
-
 use calliope_mini::{
     hal::{
         gpio::Level,
         gpiote::*,
-        pac::{self, interrupt, TIMER0},
         ppi::{self, ConfigurablePpi, Ppi},
     },
     Board,
 };
 use cortex_m_rt::entry;
 
-static SPEAKER_TIMER: Mutex<RefCell<Option<TIMER0>>> = Mutex::new(RefCell::new(None));
+const MIN_FREQUENCY_HZ_NO_PRESCALER: u32 = 245;
+const PRESCALER_LOW_FREQUENCY: u32 = 4;
+
+const _MIN_FREQUENCY_HZ: u32 = 20; //min human audible frequency
+const _MAX_FREQUENCY_HZ: u32 = 20000; //max human audible frequency
+const BOARD_FREQUENCY_HZ: u32 = 16000000;
+
+const DEFAULT_DUTY: u32 = 100;
 
 #[entry]
 fn main() -> ! {
-    if let Some(mut board) = Board::take() {
+    if let Some(board) = Board::take() {
         // stop controller
         let motor_nsleep = board
-            .speaker_motor_pins
+            .beeper_motor_pins
             .motor_nsleep
             .into_push_pull_output(Level::Low);
 
@@ -33,12 +36,12 @@ fn main() -> ! {
 
         // output pins
         let outpin1 = board
-            .speaker_motor_pins
+            .beeper_motor_pins
             .motor_in1
             .into_push_pull_output(Level::Low)
             .degrade();
         let outpin2 = board
-            .speaker_motor_pins
+            .beeper_motor_pins
             .motor_in2
             .into_push_pull_output(Level::Low)
             .degrade();
@@ -90,37 +93,21 @@ fn main() -> ! {
         board.TIMER0.bitmode.write(|w| unsafe { w.bits(0) }); // 16bit timer bit width
                                                               // CC[0] every 20 ms (50 Hz)
         board.TIMER0.prescaler.write(|w| unsafe { w.bits(2) }); // prescaler: source clock frequency is divided by 2^SCALE
-        board.TIMER0.tasks_clear.write(|w| unsafe { w.bits(1) }); // enable tasks clear
+        board.TIMER0.tasks_clear.write(|w| unsafe { w.bits(1) }); // trigger tasks clear
 
-        //initialize compare registers
-        let period = 100;
-        let duty = 50;
-        //set compare registers 0 and 1 (duty cycle for PWM on pins CALLIOPE_PIN_MOTOR_IN1 and CALLIOPE_PIN_MOTOR_IN2)
-        board.TIMER0.cc[0].write(|w| unsafe { w.bits(period - duty) }); // generate COMPARE event when
-                                                                        // count reaches this value
-        board.TIMER0.cc[1].write(|w| unsafe { w.bits(duty - 1) });
-
-        //set compare register 2 and 3 (period for PWM on pins CALLIOPE_PIN_MOTOR_IN1 and CALLIOPE_PIN_MOTOR_IN2)
-        board.TIMER0.cc[2].write(|w| unsafe { w.bits(period - 1) });
-        board.TIMER0.cc[3].write(|w| unsafe { w.bits(period) });
         board.TIMER0.shorts.write(|w| unsafe { w.bits(1 << 3) }); // shortcut between COMPARE[3] and
                                                                   // CLEAR
 
         // set up sound
         let frequency_hz = 220;
-        let min_frequency_hz = 20; //min human audible frequency
-        let max_frequency_hz = 20000; //max human audible frequency
-        let board_frequency_hz = 16000000;
 
         //stop & clear timer
         board.TIMER0.tasks_stop.write(|w| unsafe { w.bits(1) });
         board.TIMER0.tasks_clear.write(|w| unsafe { w.bits(1) });
 
         //set prescaler for sound use
-        let min_frequency_hz_no_prescaler = 245;
-        let prescaler_low_frequency = 4;
-        let prescaler = if frequency_hz < min_frequency_hz_no_prescaler {
-            prescaler_low_frequency
+        let prescaler = if frequency_hz < MIN_FREQUENCY_HZ_NO_PRESCALER {
+            PRESCALER_LOW_FREQUENCY
         } else {
             0
         };
@@ -134,18 +121,14 @@ fn main() -> ! {
         gpiote.channel0().task_out().write(|w| unsafe { w.bits(0) });
         gpiote.channel1().task_out().write(|w| unsafe { w.bits(0) });
 
-        //set pins to default values
-        // TODO
-
         //max 50% duty per pwm just like in dual motor use
-        let default_duty = 100;
-        let duty = default_duty / 2;
+        let duty = DEFAULT_DUTY / 2;
 
         //calculate period corresponding to the desired frequency and the currently used prescaler
-        let period = if frequency_hz < min_frequency_hz_no_prescaler {
-            board_frequency_hz / (frequency_hz << prescaler_low_frequency)
+        let period = if frequency_hz < MIN_FREQUENCY_HZ_NO_PRESCALER {
+            BOARD_FREQUENCY_HZ / (frequency_hz << PRESCALER_LOW_FREQUENCY)
         } else {
-            board_frequency_hz / frequency_hz
+            BOARD_FREQUENCY_HZ / frequency_hz
         };
 
         //set compare register 2 and 3 according to the given frequency (this sets the PWM period)

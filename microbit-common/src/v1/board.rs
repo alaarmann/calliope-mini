@@ -3,7 +3,7 @@ use super::gpio::{
     UART_TX,
 };
 use crate::{
-    gpio::{MicrophonePins, SpeakerMotorPins},
+    gpio::{BeeperMotorPins, MicrophonePins},
     hal::{
         gpio::{p0, Disconnected, Level},
         twi, uart,
@@ -26,8 +26,8 @@ pub struct Board {
     /// buttons
     pub buttons: Buttons,
 
-    /// speaker / motor pins
-    pub speaker_motor_pins: SpeakerMotorPins,
+    /// beeper / motor pins
+    pub beeper_motor_pins: BeeperMotorPins,
 
     /// microphone pins
     pub microphone_pins: MicrophonePins,
@@ -168,7 +168,7 @@ impl Board {
                 button_a: p0parts.p0_17.into_floating_input(),
                 button_b: p0parts.p0_16.into_floating_input(),
             },
-            speaker_motor_pins: SpeakerMotorPins {
+            beeper_motor_pins: BeeperMotorPins {
                 motor_nsleep: p0parts.p0_28.into_push_pull_output(Level::Low),
                 motor_in1: p0parts.p0_29.into_push_pull_output(Level::Low),
                 motor_in2: p0parts.p0_30.into_push_pull_output(Level::Low),
