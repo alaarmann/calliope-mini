@@ -16,8 +16,10 @@ defmt = "0.3.1"
 # ADC vs SAADC
 [dependencies.microbit-v2]
 path = "../../microbit-v2"
+optional = true
 
 [features]
+v2 = ["microbit-v2"]
 default = [
   "defmt-default",
 ]

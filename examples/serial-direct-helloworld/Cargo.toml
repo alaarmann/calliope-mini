@@ -10,3 +10,7 @@ defmt-rtt = "0.4"
 
 [dependencies.calliope-mini]
 path = "../../microbit"
+optional = true
+
+[features]
+v1 = ["calliope-mini"]

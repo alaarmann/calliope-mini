@@ -12,7 +12,7 @@ use panic_halt as _;
 
 use rtic::app;
 
-#[app(device = microbit::pac, peripherals = true)]
+#[app(device = calliope_mini::pac, peripherals = true)]
 mod app {
 
     use calliope_mini::{

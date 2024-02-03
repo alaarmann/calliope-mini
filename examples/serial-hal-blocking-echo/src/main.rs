@@ -28,6 +28,10 @@ use serial_setup::UartePort;
 
 #[entry]
 fn main() -> ! {
+    #[cfg(feature = "v1")]
+    let board = calliope_mini::Board::take().unwrap();
+
+    #[cfg(feature = "v2")]
     let board = microbit::Board::take().unwrap();
 
     #[cfg(feature = "v1")]

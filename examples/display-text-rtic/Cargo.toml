@@ -15,13 +15,8 @@ microbit-text = "1.0.0"
 path = "../../microbit"
 optional = true
 
-[dependencies.microbit-v2]
-path = "../../microbit-v2"
-optional = true
-
 [features]
 v1 = ["calliope-mini"]
-v2 = ["microbit-v2"]
 
 default = [
   "defmt-default",

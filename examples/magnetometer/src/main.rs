@@ -8,12 +8,6 @@ use cortex_m_rt::entry;
 
 use microbit::hal::{prelude::*, Timer};
 
-#[cfg(feature = "v1")]
-use calliope_mini::{
-    hal::twi,
-    pac::{twi0::frequency::FREQUENCY_A, TWI0},
-};
-#[cfg(feature = "v2")]
 use microbit::{
     hal::twim,
     pac::{twim0::frequency::FREQUENCY_A, TWIM0},
@@ -28,10 +22,6 @@ fn main() -> ! {
     let board = microbit::Board::take().unwrap();
     let mut timer = Timer::new(board.TIMER0);
 
-    #[cfg(feature = "v1")]
-    let i2c = { twi::Twi::new(board.TWI0, board.i2c.into(), FREQUENCY_A::K100) };
-
-    #[cfg(feature = "v2")]
     let i2c = { twim::Twim::new(board.TWIM0, board.i2c_internal.into(), FREQUENCY_A::K100) };
 
     let mut sensor = Lsm303agr::new_with_i2c(i2c);
@@ -63,10 +53,6 @@ fn main() -> ! {
     }
 }
 
-#[cfg(feature = "v1")]
-type Sensor = Lsm303agr<I2cInterface<twi::Twi<TWI0>>, MagOneShot>;
-
-#[cfg(feature = "v2")]
 type Sensor = Lsm303agr<I2cInterface<twim::Twim<TWIM0>>, MagOneShot>;
 
 fn get_data(sensor: &mut Sensor) {
