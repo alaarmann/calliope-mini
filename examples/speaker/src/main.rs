@@ -110,7 +110,7 @@ fn main() -> ! {
         let frequency_hz = 220;
         let min_frequency_hz = 20; //min human audible frequency
         let max_frequency_hz = 20000; //max human audible frequency
-        let board_frequency = 16000000;
+        let board_frequency_hz = 16000000;
 
         //stop & clear timer
         board.TIMER0.tasks_stop.write(|w| unsafe { w.bits(1) });
@@ -143,12 +143,12 @@ fn main() -> ! {
 
         //calculate period corresponding to the desired frequency and the currently used prescaler
         let period = if frequency_hz < min_frequency_hz_no_prescaler {
-            board_frequency / (frequency_hz << prescaler_low_frequency)
+            board_frequency_hz / (frequency_hz << prescaler_low_frequency)
         } else {
-            board_frequency / frequency_hz
+            board_frequency_hz / frequency_hz
         };
 
-        //set compare register 2 and 3 according to the gives frequency (this sets the PWM period)
+        //set compare register 2 and 3 according to the given frequency (this sets the PWM period)
         board.TIMER0.cc[2].write(|w| unsafe { w.bits(period - 1) });
         board.TIMER0.cc[3].write(|w| unsafe { w.bits(period) });
 
@@ -156,7 +156,7 @@ fn main() -> ! {
         board.TIMER0.cc[0].write(|w| unsafe { w.bits(period - (period * duty) / 100) });
         board.TIMER0.cc[1].write(|w| unsafe { w.bits((period * duty) / 100 - 1) });
 
-        //enable task & restart PWM depending on silent mode setting
+        //enable task & restart PWM
         gpiote.channel0().task_out().write(|w| unsafe { w.bits(1) });
         gpiote.channel1().task_out().write(|w| unsafe { w.bits(1) });
 
