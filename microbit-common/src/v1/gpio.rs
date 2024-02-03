@@ -53,6 +53,13 @@ pub struct DisplayPins {
     pub row3: ROW3,
 }
 
+/// GPIO pins connected to the speaker / motor driver
+pub struct SpeakerMotorPins {
+    pub motor_nsleep: MOTOR_NSLEEP,
+    pub motor_in1: MOTOR_IN1,
+    pub motor_in2: MOTOR_IN2,
+}
+
 /// GPIO pins connected to the microphone
 pub struct MicrophonePins {
     pub mic_in: MIC,
@@ -132,9 +139,9 @@ pub type BTN_B = p0::P0_16<Input<Floating>>;
 pub type RGB_LED<MODE> = p0::P0_18<MODE>;
 
 /* motor */
-pub type MOTOR_NSLEEP<MODE> = p0::P0_28<MODE>;
-pub type MOTOR_IN1<MODE> = p0::P0_29<MODE>;
-pub type MOTOR_IN2<MODE> = p0::P0_30<MODE>;
+pub type MOTOR_NSLEEP = p0::P0_28<Output<PushPull>>;
+pub type MOTOR_IN1 = p0::P0_29<Output<PushPull>>;
+pub type MOTOR_IN2 = p0::P0_30<Output<PushPull>>;
 
 /* mic */
 pub type MIC = p0::P0_03<Input<Floating>>;
