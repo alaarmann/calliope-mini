@@ -3,7 +3,7 @@ use super::gpio::{
     UART_TX,
 };
 use crate::{
-    gpio::{BeeperMotorPins, MicrophonePins},
+    gpio::{BeeperMotorPins, MicrophonePins, RGB_LED},
     hal::{
         gpio::{p0, Disconnected, Level},
         twi, uart,
@@ -31,6 +31,9 @@ pub struct Board {
 
     /// microphone pins
     pub microphone_pins: MicrophonePins,
+
+    /// rgb led pin
+    pub rgb_led_pin: RGB_LED,
 
     /// I2C shared internal and external bus pins
     pub i2c: I2CPins,
@@ -176,6 +179,7 @@ impl Board {
             microphone_pins: MicrophonePins {
                 mic_in: p0parts.p0_03.into_floating_input(),
             },
+            rgb_led_pin: p0parts.p0_18.into_push_pull_output(Level::Low),
             i2c: I2CPins {
                 scl: p0parts.p0_19.into_floating_input(),
                 sda: p0parts.p0_20.into_floating_input(),

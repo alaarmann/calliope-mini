@@ -136,7 +136,7 @@ pub type BTN_A = p0::P0_17<Input<Floating>>;
 pub type BTN_B = p0::P0_16<Input<Floating>>;
 
 /* rgb led */
-pub type RGB_LED<MODE> = p0::P0_18<MODE>;
+pub type RGB_LED = p0::P0_18<Output<PushPull>>;
 
 /* motor */
 pub type MOTOR_NSLEEP = p0::P0_28<Output<PushPull>>;
