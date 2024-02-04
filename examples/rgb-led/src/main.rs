@@ -20,7 +20,7 @@ fn main() -> ! {
     board.display_pins.row1.set_high().unwrap();
     let mut led1 = board.display_pins.col1;
 
-    let mut rgb_led_pin = board.rgb_led_pin.into_push_pull_output(Level::Low);
+    let _rgb_led_pin = board.rgb_led_pin.into_push_pull_output(Level::Low);
 
     let grb: [u8; 3] = [0, 0, 0];
     set_colour(grb);
@@ -38,6 +38,7 @@ fn main() -> ! {
     }
 }
 
+#[allow(unused_assignments)]
 fn set_colour(grb: [u8; 3]) {
     unsafe {
         (*GPIO::ptr()).outclr.write(|w| w.pin18().set_bit());
@@ -119,6 +120,7 @@ fn set_colour(grb: [u8; 3]) {
     nrf_delay_us(60);
 }
 
+#[allow(unused_assignments)]
 #[inline(always)]
 fn nrf_delay_us(mut delay_us: u32) {
     unsafe {
