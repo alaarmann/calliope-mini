@@ -38,7 +38,6 @@ fn main() -> ! {
     }
 }
 
-#[allow(unused_assignments)]
 fn set_colour(grb: [u8; 3]) {
     unsafe {
         (*GPIO::ptr()).outclr.write(|w| w.pin18().set_bit());
@@ -59,10 +58,10 @@ fn set_colour(grb: [u8; 3]) {
         // OUTCLR offset 0x50C
         // at 16 MHz 1 cycle is 62.5 nanoseconds
         // subtract 2 cycles for STR instruction (needs verification)
-        let mut rgb_led_pin = 1 << 18;
-        let mut gpio_base = 0x50000000;
-        let mut outset_offset = 0x508;
-        let mut outclr_offset = 0x50c;
+        let rgb_led_pin = 1 << 18;
+        let gpio_base = 0x50000000;
+        let outset_offset = 0x508;
+        let outclr_offset = 0x50c;
         if bit {
             unsafe {
                 asm!(
@@ -83,10 +82,10 @@ fn set_colour(grb: [u8; 3]) {
                 "nop",
                 "nop",
                 "nop",
-                inout(reg) rgb_led_pin,
-                inout(reg) gpio_base,
-                inout(reg) outset_offset,
-                inout(reg) outclr_offset,
+                inout(reg) rgb_led_pin => _,
+                inout(reg) gpio_base => _,
+                inout(reg) outset_offset => _,
+                inout(reg) outclr_offset => _,
                 );
             }
         } else {
@@ -109,10 +108,10 @@ fn set_colour(grb: [u8; 3]) {
                 "nop",
                 "nop",
                 "nop",
-                inout(reg) rgb_led_pin,
-                inout(reg) gpio_base,
-                inout(reg) outset_offset,
-                inout(reg) outclr_offset,
+                inout(reg) rgb_led_pin => _,
+                inout(reg) gpio_base => _,
+                inout(reg) outset_offset => _,
+                inout(reg) outclr_offset => _,
                 );
             }
         }
@@ -120,9 +119,8 @@ fn set_colour(grb: [u8; 3]) {
     nrf_delay_us(60);
 }
 
-#[allow(unused_assignments)]
 #[inline(always)]
-fn nrf_delay_us(mut delay_us: u32) {
+fn nrf_delay_us(delay_us: u32) {
     unsafe {
         asm!(
         "2:",
@@ -142,7 +140,7 @@ fn nrf_delay_us(mut delay_us: u32) {
         "nop",
         "nop",
         "bne 2b",
-        inout(reg) delay_us
+        inout(reg) delay_us => _
         );
     }
 }
