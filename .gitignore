@@ -6,3 +6,4 @@ bloat_log*
 !.gitignore
 !.github
 !.cargo
+rust-analyzer.json
