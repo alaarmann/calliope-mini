@@ -1,35 +1,41 @@
 # calliope-mini
 
-_calliope-mini_ contains everything required getting started using Rust to create firmwares for the fabulous
+_calliope-mini_ contains everything required getting started using Rust to create firmwares for the
 [Calliope mini](https://www.calliope.cc) microcontroller board. This little board has a lot built-in,
 even a capable debugging interface.
+
+## Important notes
+
+- this project is currently under active development, APIs are expected to change.
+- it is a fork of [microbit](https://github.com/nrf-rs/microbit), a Board Support Package (BSB) for the BBC micro:bit
+- currently supported is Calliope mini _V1_ exclusively, support for V2 and V3 is planned
 
 ## Getting started
 
 All you need to start programming this device is:
 
 - A Calliope mini board
-- A computer (macOS and Linux work perfectly, [Windows tested as well](http://flames-of-code.netlify.com/blog/rust-microbit-windows/))
+- A computer: Linux is tested
 - A bit of open source software
-
-### Know your version
-
-The micro:bit comes in different versions. There is a separate crate for each major board version. See the table below to identify
-which crate you need to use.
-
-| Crate                          | Board version | Board image                                                                                                                                                                                                                            | Docs                                                                             | crates.io                                                                                             | target                  |
-| ------------------------------ | ------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------- | ----------------------- |
-| [`microbit`](./microbit)       | V1            | [<img src="https://github.com/microbit-foundation/microbit-svg/raw/master/microbit-drawing-back-1-5.png" width="124px" height="100px">](https://github.com/microbit-foundation/microbit-svg/blob/master/microbit-drawing-back-1-5.png) | [![docs.rs](https://docs.rs/microbit/badge.svg)](https://docs.rs/microbit)       | [![crates.io](https://img.shields.io/crates/d/microbit.svg)](https://crates.io/crates/microbit)       | `thumbv6m-none-eabi`    |
-| [`microbit-v2`](./microbit-v2) | V2            | [<img src="https://github.com/microbit-foundation/microbit-svg/raw/master/microbit-drawing-back-2.png" width="124px" height="100px">](https://github.com/microbit-foundation/microbit-svg/blob/master/microbit-drawing-back-2.png)     | [![docs.rs](https://docs.rs/microbit-v2/badge.svg)](https://docs.rs/microbit-v2) | [![crates.io](https://img.shields.io/crates/d/microbit-v2.svg)](https://crates.io/crates/microbit-v2) | `thumbv7em-none-eabihf` |
 
 ### Install dependencies
 
-The examples make use of some of the fantastic tooling from the [knurling](https://knurling.ferrous-systems.com/) project.
-In order to run the examples you need to install [`probe-run`](https://github.com/knurling-rs/probe-run#installation)
-and [`flip-link`](https://github.com/knurling-rs/flip-link#installation).
+On Linux you have the options to use `cargo install` or `nix-shell`.
+
+#### Cargo install
+
+In order to run the examples you need to install [`flip-link`](https://github.com/knurling-rs/flip-link#installation) and [`cargo-embed`](https://probe.rs/docs/tools/cargo-embed/#installation).
 
 ```bash
-> cargo install probe-run flip-link
+> cargo install flip-link cargo-embed
+```
+
+#### Nix
+
+Start a Nix shell in the project's base directory
+
+```bash
+> nix-shell
 ```
 
 ### Run an example
@@ -48,16 +54,6 @@ a message should appear on the LED display.
 
 Congratulations! You've flashed your first Rust program onto your Calliope mini!
 
-## Further reading
-
-A guide to embedded development with Rust on the _micro:bit_ using this crate can be found in the [MicroRust book](https://droogmic.github.io/microrust/).
-
-Other useful resources:
-
-- [micro:bit developer community](https://tech.microbit.org)
-- [micro:bit hardware overview](https://tech.microbit.org/hardware/)
-- [nrf-hal](https://github.com/nrf-rs/nrf-hal#readme) the hardware abstraction layer (HAL) this repository is based on
-
 ## License
 
-[0-clause BSD license](LICENSE-0BSD.txt).
+[MIT](LICENSE)
