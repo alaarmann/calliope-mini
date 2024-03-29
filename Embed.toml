@@ -1,0 +1,15 @@
+[default.general]
+ chip = "nrf51822_xxAA"
+
+[default.reset]
+halt_afterwards = false
+
+[default.rtt]
+enabled = true
+channels = [
+    { up = 0, down = 0, name = "Log", up_mode = "BlockIfFull", format = "Defmt" },
+]
+
+[default.gdb]
+enabled = false
+

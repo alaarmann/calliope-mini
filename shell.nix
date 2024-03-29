@@ -18,7 +18,7 @@ in pkgs.mkShell {
     gcc-arm-embedded-11
     cargo
     cargo-binutils
-    probe-run
+    probe-rs
     flip-link
   ]);
   RUST_BACKTRACE = 1;

@@ -15,6 +15,7 @@ use calliope_mini::{
 
 #[entry]
 fn main() -> ! {
+    defmt::println!("Start");
     if let Some(board) = Board::take() {
         let mut timer = Timer::new(board.TIMER0);
         let mut display = Display::new(board.display_pins);
@@ -85,6 +86,7 @@ fn main() -> ! {
                     for n_val in n_iter {
                         if count == usize::from(i16::unsigned_abs(v / 100)) {
                             display.show(&mut timer, *n_val, 10);
+                            defmt::println!("value={}", count);
                             break;
                         }
                         count += 1;
@@ -93,9 +95,12 @@ fn main() -> ! {
                         display.show(&mut timer, sign_plus, 10);
                     }
                 }
-                Err(_e) => display.show(&mut timer, letter_E, 10),
+                Err(_e) => {
+                    display.show(&mut timer, letter_E, 10);
+                    defmt::error!("Error\n");
+                }
             }
         }
     }
-    panic!("End");
+    defmt::panic!("End");
 }
